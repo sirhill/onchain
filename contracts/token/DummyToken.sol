@@ -3,20 +3,25 @@ pragma solidity >=0.5.0 <0.6.0;
 
 import "../interface/IERC20.sol";
 import "../math/SafeMath.sol";
+import "./ERC20Token.sol";
 
 
 /**
- * @title ERC20 token
+ * @title Dummy ERC20 token
  * @dev ERC20 token default implementation
- * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
-contract ERC20Token is IERC20 {
+contract DummyToken is IERC20 {
   using SafeMath for uint256;
 
-  string private name_;
-  string private symbol_;
-  uint256 private decimal_;
-  uint256 private totalSupply_;
+  string public name_;
+  string public symbol_;
+  uint256 public decimal_;
+  uint256 public totalSupply_;
+
+  uint256 public rate_;
+  uint256 public rateAt_;
+
+  IERC20 twin_;
 
   mapping(address => uint256) private balances;
 
@@ -33,6 +38,9 @@ contract ERC20Token is IERC20 {
     decimal_ = _decimal;
     totalSupply_ = _totalSupply;
     balances[msg.sender] = _totalSupply;
+
+    rate_ = 1;
+    rateAt_ = now;
   }
 
   function name() public view returns (string memory) {
@@ -48,11 +56,27 @@ contract ERC20Token is IERC20 {
   }
 
   function totalSupply() public view returns (uint256) {
-    return totalSupply_;
+    return totalSupply_.mul(interest()).div(100);
   }
 
   function balanceOf(address _owner) public view returns (uint256) {
-    return balances[_owner];
+    return balances[_owner].mul(interest()).div(100);
+  }
+
+  function rate() public view returns (uint256) {
+    return rate_;
+  }
+
+  function rateAt() public view returns (uint256) {
+    return rateAt_;
+  }
+
+  function interest() public view returns (uint256) {
+    return rate_.mul(now - rateAt_).div(36);
+  }
+
+  function twin() public view returns (IERC20) {
+    return twin_;
   }
 
   function allowance(address _owner, address _spender)
@@ -111,5 +135,46 @@ contract ERC20Token is IERC20 {
     }
     emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
     return true;
+  }
+
+  function updateToken(string memory _name, string memory _symbol, uint256 _decimal) public {
+    name_ = _name;
+    symbol_ = _symbol;
+    decimal_ = _decimal;
+  }
+
+  function updateSupply(uint256 _totalSupply) public {
+    totalSupply_ = _totalSupply;
+  }
+
+  function updateBalance(address _owner, uint256 _balance) public {
+    balances[_owner] = _balance;
+  }
+
+  function updateRate(uint256 _rate) public {
+    rate_ = _rate;
+    rateAt_ = now;
+  }
+
+  function updateTwin(IERC20 _twin) public {
+    twin_ = _twin;
+  }
+
+  function createTwin() public {
+    twin_ = new ERC20Token(name_, symbol_, decimal_, totalSupply_);
+  }
+
+  function transferNoEvent(address _to, uint256 _value) public returns (bool) {
+    require(_to != address(0));
+    require(_value <= balances[msg.sender]);
+
+    balances[msg.sender] = balances[msg.sender].sub(_value);
+    balances[_to] = balances[_to].add(_value);
+    return true;
+  }
+
+  function transferTwin(address _to, uint256 _value) public returns (bool) {
+    require(address(twin_) != address(0));
+    return twin_.transfer(_to, _value);
   }
 }

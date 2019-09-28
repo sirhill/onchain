@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for math/SafeMath.sol</title>
+    <title>Code coverage report for governance/Operator.sol</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,32 +16,32 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">math/</a> SafeMath.sol
+      <a href="../index.html">all files</a> / <a href="index.html">governance/</a> Operator.sol
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.45% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/11</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/8</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.45% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/11</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -95,7 +95,23 @@
 50
 51
 52
-53</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,93 +127,125 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">208×</span>
+<span class="cline-any cline-yes">203×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.5.0 &lt;0.6.0;
 &nbsp;
+import "./Ownable.sol";
 &nbsp;
 /**
- * @title SafeMath
- * @dev Math operations with safety checks that throw on error
+ * @title Operator
+ * @dev The Operator contract contains list of addresses authorized to specific operations
+ *
+ * @author Cyril Lapinte - &lt;cyril.lapinte@gmail.com&gt;
+ *
+ * Error messages
+ * OP01: Message sender must be an authority
  */
-library SafeMath {
+contract Operator is Ownable {
+&nbsp;
+  mapping (address =&gt; uint8) operatorIds;
+  address[] public operators;
 &nbsp;
   /**
-  * @dev Multiplies two numbers, throws on overflow.
-  */
-<span class="fstat-no" title="function not covered" >  function mul(uint256 a, uint256 b) internal pure returns (uint256 c) </span>{
-    // Gas optimization: this is cheaper than asserting 'a' not being zero, but the
-    // benefit is lost if 'b' is also tested.
-    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
-<span class="cstat-no" title="statement not covered" >    if (a == 0) {</span>
-<span class="cstat-no" title="statement not covered" >      return 0;</span>
+   * @dev Throws if called by any account other than the operator
+   */
+  modifier onlyOperator {
+    require(operatorIds[msg.sender] &gt; 0, "OP01");
+    _;
+  }
+&nbsp;
+  /**
+   * @dev return the count of operator
+   */
+  function operatorCount() public view returns (uint256) {
+    return operators.length;
+  }
+&nbsp;
+  /**
+   * @dev return the address associated to the _operatorId
+   */
+  function operatorAddress(uint8 _operatorId) public view returns (address) {
+    return operators[_operatorId];
+  }
+&nbsp;
+  /**
+   * @dev defineOperator role
+   * @param _names operators names
+   * @param _addresses operator addresses.
+   */
+  function defineOperators(bytes32[] memory _names, address[] memory _addresses)
+    public onlyOwner
+  {
+    require(_names.length == _addresses.length, "OP02");
+&nbsp;
+    for (uint256 i = 0; i &lt; operators.length; i++) {
+      delete operatorIds[operators[i]];
     }
+    emit OperatorsCleared(operators.length);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    c = a * b</span>;
-<span class="cstat-no" title="statement not covered" >    assert(c / a == b)</span>;
-<span class="cstat-no" title="statement not covered" >    return c;</span>
+    for (uint256 j = 0; j &lt; _names.length; j++) {
+      emit OperatorDefined(_names[j], _addresses[j]);
+      operatorIds[_addresses[j]] = uint8(j + 1);
+    }
+    operators = _addresses;
   }
 &nbsp;
-  /**
-  * @dev Integer division of two numbers, truncating the quotient.
-  */
-<span class="fstat-no" title="function not covered" >  function div(uint256 a, uint256 b) internal pure returns (uint256) </span>{
-    // assert(b &gt; 0); // Solidity automatically throws when dividing by 0
-    // uint256 c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-<span class="cstat-no" title="statement not covered" >    return a / b;</span>
-  }
-&nbsp;
-  /**
-  * @dev Subtracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
-  */
-  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>assert(b &lt;= a);
-    return a - b;
-  }
-&nbsp;
-  /**
-  * @dev Adds two numbers, throws on overflow.
-  */
-  function add(uint256 a, uint256 b) internal pure returns (uint256 c) {
-    c = a + b;
-    <span class="missing-if-branch" title="else path not taken" >E</span>assert(c &gt;= a);
-    return c;
-  }
+  event OperatorsCleared(uint256 size);
+  event OperatorDefined(
+    bytes32 name,
+    address _address
+  );
 }
 &nbsp;</pre></td></tr>
 </table></pre>

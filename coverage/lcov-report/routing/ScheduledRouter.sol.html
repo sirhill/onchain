@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for math/SafeMath.sol</title>
+    <title>Code coverage report for routing/ScheduledRouter.sol</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">math/</a> SafeMath.sol
+      <a href="../index.html">all files</a> / <a href="index.html">routing/</a> ScheduledRouter.sol
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.45% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/11</span>
+        <span class='fraction'>0/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/8</span>
+        <span class='fraction'>0/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/4</span>
+        <span class='fraction'>0/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.45% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/11</span>
+        <span class='fraction'>0/9</span>
       </div>
     </div>
   </div>
@@ -89,13 +89,7 @@
 44
 45
 46
-47
-48
-49
-50
-51
-52
-53</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+47</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,13 +105,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,76 +115,71 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
-<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.5.0 &lt;0.6.0;
 &nbsp;
 &nbsp;
+import "./BasicRouter.sol";
+&nbsp;
+&nbsp;
 /**
- * @title SafeMath
- * @dev Math operations with safety checks that throw on error
+ * @title ScheduledRouter
+ * @dev ScheduledRouter is a proxy which redirect all incoming transactions
+ *
+ * Error messages
+ * SR01: Invalid schedule
+ *
+ * @author Cyril Lapinte - &lt;cyril.lapinte@gmail.com&gt;
  */
-library SafeMath {
+contract ScheduledRouter is BasicRouter {
 &nbsp;
-  /**
-  * @dev Multiplies two numbers, throws on overflow.
-  */
-<span class="fstat-no" title="function not covered" >  function mul(uint256 a, uint256 b) internal pure returns (uint256 c) </span>{
-    // Gas optimization: this is cheaper than asserting 'a' not being zero, but the
-    // benefit is lost if 'b' is also tested.
-    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
-<span class="cstat-no" title="statement not covered" >    if (a == 0) {</span>
-<span class="cstat-no" title="statement not covered" >      return 0;</span>
+  struct Schedule {
+    uint256 startAt;
+    uint256 endAt;
+  }
+&nbsp;
+  mapping(address =&gt; Schedule) schedules;
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function schedule(address _origin) public view returns (uint256, uint256) </span>{
+<span class="cstat-no" title="statement not covered" >    Schedule memory schedule_ = schedules[_origin];</span>
+<span class="cstat-no" title="statement not covered" >    return (schedule_.startAt, schedule_.endAt);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function findDestination(address _origin) public view returns (address) </span>{
+<span class="cstat-no" title="statement not covered" >    Schedule memory schedule_ = schedules[_origin];</span>
+<span class="cstat-no" title="statement not covered" >    if (now &lt; schedule_.startAt || now &gt; schedule_.endAt) {</span>
+<span class="cstat-no" title="statement not covered" >      return address(0);</span>
     }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    c = a * b</span>;
-<span class="cstat-no" title="statement not covered" >    assert(c / a == b)</span>;
-<span class="cstat-no" title="statement not covered" >    return c;</span>
+<span class="cstat-no" title="statement not covered" >    return super.findDestination(_origin);</span>
   }
 &nbsp;
-  /**
-  * @dev Integer division of two numbers, truncating the quotient.
-  */
-<span class="fstat-no" title="function not covered" >  function div(uint256 a, uint256 b) internal pure returns (uint256) </span>{
-    // assert(b &gt; 0); // Solidity automatically throws when dividing by 0
-    // uint256 c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-<span class="cstat-no" title="statement not covered" >    return a / b;</span>
+<span class="fstat-no" title="function not covered" >  function setRouteSchedule(address _origin, uint256 _startAt, uint256 _endAt)</span>
+    public onlyOwner configNotLocked returns (bool) {
+<span class="cstat-no" title="statement not covered" >    require(_startAt &gt; now &amp;&amp; _startAt &lt; _endAt, "SR01")</span>;
+<span class="cstat-no" title="statement not covered" >    schedules[_origin] = Schedule(_startAt, _endAt)</span>;
+<span class="cstat-no" title="statement not covered" >    emit Scheduled(_startAt, _endAt);</span>
   }
 &nbsp;
-  /**
-  * @dev Subtracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
-  */
-  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>assert(b &lt;= a);
-    return a - b;
-  }
-&nbsp;
-  /**
-  * @dev Adds two numbers, throws on overflow.
-  */
-  function add(uint256 a, uint256 b) internal pure returns (uint256 c) {
-    c = a + b;
-    <span class="missing-if-branch" title="else path not taken" >E</span>assert(c &gt;= a);
-    return c;
-  }
+  event Scheduled(uint256 startAt, uint256 endAt);
 }
 &nbsp;</pre></td></tr>
 </table></pre>

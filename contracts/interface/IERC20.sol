@@ -2,11 +2,11 @@ pragma solidity >=0.5.0 <0.6.0;
 
 
 /**
- * @title ERC20 interface
+ * @title IERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/20
  * @dev see https://github.com/ethereum/EIPs/issues/179
  */
-contract ERC20 {
+contract IERC20 {
   function name() public view returns (string memory);
   function symbol() public view returns (string memory);
   function decimal() public view returns (uint256);
@@ -27,7 +27,7 @@ contract ERC20 {
 
   function decreaseApproval(address spender, uint subtractedValue)
     public returns (bool);
- 
+
   event Transfer(address indexed from, address indexed to, uint256 value);
   event Approval(
     address indexed owner,
