@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 import "./BasicRouter.sol";
@@ -22,12 +22,14 @@ contract ScheduledRouter is BasicRouter {
 
   mapping(address => Schedule) schedules;
 
+  event Scheduled(uint256 startAt, uint256 endAt);
+
   function schedule(address _origin) public view returns (uint256, uint256) {
     Schedule memory schedule_ = schedules[_origin];
     return (schedule_.startAt, schedule_.endAt);
   }
 
-  function findDestination(address _origin) public view returns (address) {
+  function findDestination(address _origin) virtual override public view returns (address) {
     Schedule memory schedule_ = schedules[_origin];
     if (now < schedule_.startAt || now > schedule_.endAt) {
       return address(0);
@@ -41,6 +43,4 @@ contract ScheduledRouter is BasicRouter {
     schedules[_origin] = Schedule(_startAt, _endAt);
     emit Scheduled(_startAt, _endAt);
   }
-
-  event Scheduled(uint256 startAt, uint256 endAt);
 }

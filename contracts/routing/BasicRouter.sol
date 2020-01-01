@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 import "../governance/Ownable.sol";
@@ -28,7 +28,6 @@ contract BasicRouter is IRouter, Ownable {
   }
 
   mapping(address => Route) routes;
-
   bool private configLocked_;
 
   modifier configNotLocked() {
@@ -36,12 +35,12 @@ contract BasicRouter is IRouter, Ownable {
     _;
   }
 
-  function () external payable {
+  fallback() override external payable {
     require(configLocked_, "RO02");
     callPayable(msg.value, msg.sender, msg.data);
   }
 
-  function destinations(address _origin) public view returns (address[] memory) {
+  function destinations(address _origin) override public view returns (address[] memory) {
     return routes[_origin].destinations;
   }
 
@@ -49,18 +48,18 @@ contract BasicRouter is IRouter, Ownable {
     return routes[_origin].activeDestination;
   }
 
-  function destinationAbi(address _origin) public view returns (bytes4) {
+  function destinationAbi(address _origin) override public view returns (bytes4) {
     return routes[_origin].destinationAbi;
   }
 
-  function isConfigLocked() public view returns (bool) {
+  function isConfigLocked() override public view returns (bool) {
     return configLocked_;
   }
 
   /**
    * @dev method to be overwritten by inheritance
    */
-  function findDestination(address _origin) public view returns (address) {
+  function findDestination(address _origin) virtual public view returns (address) {
     Route memory route = routes[_origin];
     return (route.destinations.length > 0) ?
       route.destinations[route.activeDestination]: address(0);
@@ -70,7 +69,7 @@ contract BasicRouter is IRouter, Ownable {
     address _origin,
     address[] memory _destinations,
     bytes4 _destinationAbi)
-    public onlyOwner configNotLocked returns (bool)
+    override public onlyOwner configNotLocked returns (bool)
   {
     routes[_origin] = Route(_destinations, 0, _destinationAbi);
     emit RouteDefined(_origin, _destinations, _destinationAbi);
@@ -89,7 +88,7 @@ contract BasicRouter is IRouter, Ownable {
   /*
    * @dev Lock the configuration
    */
-  function lockConfig() public onlyOwner configNotLocked {
+  function lockConfig() override public onlyOwner configNotLocked {
     configLocked_ = true;
     emit ConfigLocked();
   }
@@ -98,7 +97,7 @@ contract BasicRouter is IRouter, Ownable {
    * @dev Send the received ETH to the configured and locked contract address
    * The call can be done only when the redirection has started
    */
-  function callPayable(uint256 _value, address _sender, bytes memory _data) internal
+  function callPayable(uint256 _value, address _sender, bytes memory _data) virtual internal
   {
     address destination = findDestination(_sender);
     require(destination != address(0), "RO04");

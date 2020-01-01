@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 /**
@@ -14,22 +14,22 @@ pragma solidity >=0.5.0 <0.6.0;
  *
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
-contract IRouter {
+abstract contract IRouter {
 
-  function () external payable;
-  function destinations(address _origin) public view returns (address[] memory);
-  function destinationAbi(address _origin) public view returns (bytes4);
-  function isConfigLocked() public view returns (bool);
+  event ConfigLocked();
+  event RouteDefined(address origin, address[] destinations, bytes4 destinationAbi);
+  event DestinationSwitched(address origin, uint256 activeDestination);
+
+  fallback() virtual external payable;
+  function destinations(address _origin) virtual public view returns (address[] memory);
+  function destinationAbi(address _origin) virtual public view returns (bytes4);
+  function isConfigLocked() virtual public view returns (bool);
 
   function setRoute(
     address _origin,
     address[] memory _destinations,
     bytes4 _destinationAbi
-    ) public returns (bool);
+    ) virtual public returns (bool);
 
-  function lockConfig() public;
-
-  event ConfigLocked();
-  event RouteDefined(address origin, address[] destinations, bytes4 destinationAbi);
-  event DestinationSwitched(address origin, uint256 activeDestination);
+  function lockConfig() virtual public;
 }

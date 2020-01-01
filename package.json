@@ -40,19 +40,19 @@
   "homepage": "https://github.com/sirhill/onchain",
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.4.0",
+    "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "ethereumjs-util": "^6.1.0",
+    "ethereumjs-util": "^6.2.0",
     "ganache-cli": "^6.7.0",
     "solhint": "^2.3.0",
-    "solidity-coverage": "^0.6.7",
-    "solidity-docgen": "^0.3.1",
-    "truffle": "^5.0.38",
+    "solidity-coverage": "^0.7.0",
+    "solidity-docgen": "^0.3.13",
+    "truffle": "^5.1.6",
     "truffle-flattener": "^1.4.2",
-    "truffle-hdwallet-provider": "^1.0.9"
+    "@truffle/hdwallet-provider": "^1.0.28"
   }
 }

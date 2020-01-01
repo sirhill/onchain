@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 import "../governance/Operator.sol";
@@ -46,21 +46,21 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev number of user registered
    */
-  function userCount() public view returns (uint256) {
+  function userCount() override public view returns (uint256) {
     return userCount_;
   }
 
   /**
    * @dev the userId associated to the provided address
    */
-  function userId(address _address) public view returns (uint256) {
+  function userId(address _address) override public view returns (uint256) {
     return walletOwners[_address];
   }
 
   /**
    * @dev the userId associated to the provided address if the user is valid
    */
-  function validUserId(address _address) public view returns (uint256) {
+  function validUserId(address _address) override public view returns (uint256) {
     uint256 addressUserId = walletOwners[_address];
     if (isValidInternal(users[addressUserId])) {
       return addressUserId;
@@ -71,14 +71,14 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev returns the time at which user validity ends
    */
-  function validUntilTime(uint256 _userId) public view returns (uint256) {
+  function validUntilTime(uint256 _userId) override public view returns (uint256) {
     return users[_userId].validUntilTime;
   }
 
   /**
    * @dev is the user suspended
    */
-  function suspended(uint256 _userId) public view returns (bool) {
+  function suspended(uint256 _userId) override public view returns (bool) {
     return users[_userId].suspended;
   }
 
@@ -86,7 +86,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev access to extended user data
    */
   function extended(uint256 _userId, uint256 _key)
-    public view returns (uint256)
+    override public view returns (uint256)
   {
     return users[_userId].extended[_key];
   }
@@ -94,14 +94,14 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev validity of the current user
    */
-  function isAddressValid(address _address) public view returns (bool) {
+  function isAddressValid(address _address) override public view returns (bool) {
     return isValidInternal(users[walletOwners[_address]]);
   }
 
   /**
    * @dev validity of the current user
    */
-  function isValid(uint256 _userId) public view returns (bool) {
+  function isValid(uint256 _userId) override public view returns (bool) {
     return isValidInternal(users[_userId]);
   }
 
@@ -109,7 +109,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev register a user
    */
   function registerUser(address _address, uint256 _validUntilTime)
-    public onlyOperator
+    override public onlyOperator
   {
     registerUserInternal(_address, _validUntilTime);
   }
@@ -118,7 +118,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev register many users
    */
   function registerManyUsers(address[] memory _addresses, uint256 _validUntilTime)
-    public onlyOperator
+    override public onlyOperator
   {
     for (uint256 i = 0; i < _addresses.length; i++) {
       registerUserInternal(_addresses[i], _validUntilTime);
@@ -129,7 +129,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev attach an address with a user
    */
   function attachAddress(uint256 _userId, address _address)
-    public onlyOperator
+    override public onlyOperator
   {
     require(_userId > 0 && _userId <= userCount_, "UR01");
     require(walletOwners[_address] == 0, "UR02");
@@ -142,7 +142,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev attach many addresses to many users
    */
   function attachManyAddresses(uint256[] memory _userIds, address[] memory _addresses)
-    public onlyOperator
+    override public onlyOperator
   {
     require(_addresses.length == _userIds.length, "UR03");
     for (uint256 i = 0; i < _addresses.length; i++) {
@@ -153,14 +153,18 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev detach the association between an address and its user
    */
-  function detachAddress(address _address) public onlyOperator {
+  function detachAddress(address _address)
+    override public onlyOperator
+  {
     detachAddressInternal(_address);
   }
 
   /**
    * @dev detach many addresses association between addresses and their respective users
    */
-  function detachManyAddresses(address[] memory _addresses) public onlyOperator {
+  function detachManyAddresses(address[] memory _addresses)
+    override public onlyOperator
+  {
     for (uint256 i = 0; i < _addresses.length; i++) {
       detachAddressInternal(_addresses[i]);
     }
@@ -169,14 +173,14 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev detach the association between an address and its user
    */
-  function detachSelf() public {
+  function detachSelf() override public {
     detachAddressInternal(msg.sender);
   }
 
   /**
    * @dev detach the association between an address and its user
    */
-  function detachSelfAddress(address _address) public {
+  function detachSelfAddress(address _address) override public {
     uint256 senderUserId = walletOwners[msg.sender];
     require(walletOwners[_address] == senderUserId, "UR05");
     detachAddressInternal(_address);
@@ -185,7 +189,7 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev suspend a user
    */
-  function suspendUser(uint256 _userId) public onlyOperator {
+  function suspendUser(uint256 _userId) override public onlyOperator {
     require(_userId > 0 && _userId <= userCount_, "UR01");
     require(!users[_userId].suspended, "UR06");
     users[_userId].suspended = true;
@@ -194,7 +198,7 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev unsuspend a user
    */
-  function unsuspendUser(uint256 _userId) public onlyOperator {
+  function unsuspendUser(uint256 _userId) override public onlyOperator {
     require(_userId > 0 && _userId <= userCount_, "UR01");
     require(users[_userId].suspended, "UR07");
     users[_userId].suspended = false;
@@ -203,7 +207,9 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev suspend many users
    */
-  function suspendManyUsers(uint256[] memory _userIds) public onlyOperator {
+  function suspendManyUsers(uint256[] memory _userIds)
+    override public onlyOperator
+  {
     for (uint256 i = 0; i < _userIds.length; i++) {
       suspendUser(_userIds[i]);
     }
@@ -212,7 +218,9 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev unsuspend many users
    */
-  function unsuspendManyUsers(uint256[] memory _userIds) public onlyOperator {
+  function unsuspendManyUsers(uint256[] memory _userIds)
+    override public onlyOperator
+  {
     for (uint256 i = 0; i < _userIds.length; i++) {
       unsuspendUser(_userIds[i]);
     }
@@ -224,7 +232,7 @@ contract UserRegistry is IUserRegistry, Operator {
   function updateUser(
     uint256 _userId,
     uint256 _validUntilTime,
-    bool _suspended) public onlyOperator
+    bool _suspended) override public onlyOperator
   {
     require(_userId > 0 && _userId <= userCount_, "UR01");
     users[_userId].validUntilTime = _validUntilTime;
@@ -237,7 +245,7 @@ contract UserRegistry is IUserRegistry, Operator {
   function updateManyUsers(
     uint256[] memory _userIds,
     uint256 _validUntilTime,
-    bool _suspended) public onlyOperator
+    bool _suspended) override public onlyOperator
   {
     for (uint256 i = 0; i < _userIds.length; i++) {
       updateUser(_userIds[i], _validUntilTime, _suspended);
@@ -248,7 +256,7 @@ contract UserRegistry is IUserRegistry, Operator {
    * @dev update user extended information
    */
   function updateUserExtended(uint256 _userId, uint256 _key, uint256 _value)
-    public onlyOperator
+    override public onlyOperator
   {
     require(_userId > 0 && _userId <= userCount_, "UR01");
     users[_userId].extended[_key] = _value;
@@ -260,7 +268,7 @@ contract UserRegistry is IUserRegistry, Operator {
   function updateManyUsersExtended(
     uint256[] memory _userIds,
     uint256 _key,
-    uint256 _value) public onlyOperator
+    uint256 _value) override public onlyOperator
   {
     for (uint256 i = 0; i < _userIds.length; i++) {
       updateUserExtended(_userIds[i], _key, _value);

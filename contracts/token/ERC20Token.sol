@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 import "../interface/IERC20.sol";
@@ -19,7 +19,6 @@ contract ERC20Token is IERC20 {
   uint256 private totalSupply_;
 
   mapping(address => uint256) private balances;
-
   mapping (address => mapping (address => uint256)) internal allowed;
 
   constructor(
@@ -35,33 +34,34 @@ contract ERC20Token is IERC20 {
     balances[msg.sender] = _totalSupply;
   }
 
-  function name() public view returns (string memory) {
+  function name() override public view returns (string memory) {
     return name_;
   }
 
-  function symbol() public view returns (string memory) {
+  function symbol() override public view returns (string memory) {
     return symbol_;
   }
 
-  function decimal() public view returns (uint256) {
+  function decimal() override public view returns (uint256) {
     return decimal_;
   }
 
-  function totalSupply() public view returns (uint256) {
+  function totalSupply() override public view returns (uint256) {
     return totalSupply_;
   }
 
-  function balanceOf(address _owner) public view returns (uint256) {
+  function balanceOf(address _owner) override public view returns (uint256) {
     return balances[_owner];
   }
 
   function allowance(address _owner, address _spender)
-    public view returns (uint256)
+    override public view returns (uint256)
   {
     return allowed[_owner][_spender];
   }
 
-  function transfer(address _to, uint256 _value) public returns (bool) {
+  function transfer(address _to, uint256 _value)
+    override public returns (bool) {
     require(_to != address(0));
     require(_value <= balances[msg.sender]);
 
@@ -72,7 +72,7 @@ contract ERC20Token is IERC20 {
   }
 
   function transferFrom(address _from, address _to, uint256 _value)
-    public returns (bool)
+    override public returns (bool)
   {
     require(_to != address(0));
     require(_value <= balances[_from]);
@@ -85,14 +85,16 @@ contract ERC20Token is IERC20 {
     return true;
   }
 
-  function approve(address _spender, uint256 _value) public returns (bool) {
+  function approve(address _spender, uint256 _value)
+    override public returns (bool)
+  {
     allowed[msg.sender][_spender] = _value;
     emit Approval(msg.sender, _spender, _value);
     return true;
   }
 
   function increaseApproval(address _spender, uint _addedValue)
-    public returns (bool)
+    override public returns (bool)
   {
     allowed[msg.sender][_spender] = (
       allowed[msg.sender][_spender].add(_addedValue));
@@ -101,7 +103,7 @@ contract ERC20Token is IERC20 {
   }
 
   function decreaseApproval(address _spender, uint _subtractedValue)
-    public returns (bool)
+    override public returns (bool)
   {
     uint oldValue = allowed[msg.sender][_spender];
     if (_subtractedValue > oldValue) {

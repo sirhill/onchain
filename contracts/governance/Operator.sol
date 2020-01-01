@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 import "./Ownable.sol";
 
@@ -15,6 +15,12 @@ contract Operator is Ownable {
 
   mapping (address => uint8) operatorIds;
   address[] public operators;
+
+  event OperatorsCleared(uint256 size);
+  event OperatorDefined(
+    bytes32 name,
+    address _address
+  );
 
   /**
    * @dev Throws if called by any account other than the operator
@@ -59,10 +65,4 @@ contract Operator is Ownable {
     }
     operators = _addresses;
   }
-
-  event OperatorsCleared(uint256 size);
-  event OperatorDefined(
-    bytes32 name,
-    address _address
-  );
 }

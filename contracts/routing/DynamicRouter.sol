@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 import "./ScheduledRouter.sol";
 
@@ -23,6 +23,8 @@ contract DynamicRouter is ScheduledRouter {
 
   mapping(address => Distribution) distributions;
 
+  event DistributionDefined(uint256[] maxBalances, uint256[] weights);
+
   function maxBalances(address _origin) public view returns (uint256[] memory) {
     return distributions[_origin].maxBalances;
   }
@@ -31,7 +33,7 @@ contract DynamicRouter is ScheduledRouter {
     return distributions[_origin].weights;
   }
 
-  function findDestination(address _origin) public view returns (address) {
+  function findDestination(address _origin) override public view returns (address) {
     Distribution memory distribution = distributions[_origin];
     Route memory route = routes[_origin];
 
@@ -72,6 +74,4 @@ contract DynamicRouter is ScheduledRouter {
 
     return true;
   }
-
-  event DistributionDefined(uint256[] maxBalances, uint256[] weights);
 }

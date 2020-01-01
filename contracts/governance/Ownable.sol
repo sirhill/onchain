@@ -1,4 +1,4 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.6.0 <0.7.0;
 
 
 /**
@@ -7,7 +7,14 @@ pragma solidity >=0.5.0 <0.6.0;
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 contract Ownable {
+
   address public owner;
+
+  event OwnershipRenounced(address indexed previousOwner);
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
 
   /**
    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
@@ -50,10 +57,4 @@ contract Ownable {
     emit OwnershipTransferred(owner, _newOwner);
     owner = _newOwner;
   }
-
-  event OwnershipRenounced(address indexed previousOwner);
-  event OwnershipTransferred(
-    address indexed previousOwner,
-    address indexed newOwner
-  );
 }
