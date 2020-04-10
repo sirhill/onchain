@@ -30,9 +30,9 @@ let infuraKey = "";
 try {
   // Secret file format is:
   // { mnemonic: '', infuraKey, '', endpoints: { <networkname>: 'http://endpoint' } }
-  const path = __dirname + "/" + ".secret.json");
+  const path = __dirname + "/" + ".secret.json";
   if (fs.existsSync(path)) {
-    secret = JSON.parse(fs.readFileSync(__dirname + "/" + ".secret.json"));
+    secret = JSON.parse(fs.readFileSync(path));
     mnemonic = secret.mnemonic;
     infuraKey = secret.infuraKey;
   }
