@@ -22,11 +22,23 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 const fs = require('fs');
 
-// Secret file format is:
-// { mnemonic: '', infuraKey, '', endpoints: { <networkname>: 'http://endpoint' } }
-const secret = JSON.parse(fs.readFileSync(__dirname + "/" + ".secret.json"));
-const mnemonic = secret.mnemonic;
-const infuraKey = secret.infuraKey;
+
+let secret = "";
+let mnemonic = "";
+let infuraKey = "";
+
+try {
+  // Secret file format is:
+  // { mnemonic: '', infuraKey, '', endpoints: { <networkname>: 'http://endpoint' } }
+  const path = __dirname + "/" + ".secret.json");
+  if (fs.existsSync(path)) {
+    secret = JSON.parse(fs.readFileSync(__dirname + "/" + ".secret.json"));
+    mnemonic = secret.mnemonic;
+    infuraKey = secret.infuraKey;
+  }
+} catch(err) {
+  console.error(err)
+}
 
 module.exports = {
   /**
