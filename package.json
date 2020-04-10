@@ -33,7 +33,7 @@
     "security",
     "assets"
   ],
-  "author": "Cyril Lapinte",
+  "author": "Cyril Lapinte <cyril.lapinte@openfiz.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sirhill/onchain/issues"
