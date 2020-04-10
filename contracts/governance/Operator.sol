@@ -1,6 +1,7 @@
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity ^0.6.0;
 
 import "./Ownable.sol";
+
 
 /**
  * @title Operator
@@ -13,7 +14,7 @@ import "./Ownable.sol";
  */
 contract Operator is Ownable {
 
-  mapping (address => uint8) operatorIds;
+  mapping (address => uint8) public operatorIds;
   address[] public operators;
 
   event OperatorsCleared(uint256 size);

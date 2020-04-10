@@ -1,12 +1,10 @@
 {
-  "extends": "default",
+  "extends": "solhint:recommended",
   "rules": {
-    "indent": ["error", 2],
-
-    "bracket-align": false,
-    "compiler-fixed": false,
-    "no-simple-event-func-name": false,
-    "separate-by-one-line-in-contract": false,
-    "two-lines-top-level-separator": false
+    "func-order": "off",
+    "mark-callable-contracts": "off",
+    "no-empty-blocks": "off",
+    "compiler-version": ["error", "^0.6.0"],
+    "private-vars-leading-underscore": "error"
   }
 }

@@ -1,4 +1,4 @@
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity ^0.6.0;
 
 
 import "./BasicRouter.sol";
@@ -20,7 +20,7 @@ contract ScheduledRouter is BasicRouter {
     uint256 endAt;
   }
 
-  mapping(address => Schedule) schedules;
+  mapping(address => Schedule) public schedules;
 
   event Scheduled(uint256 startAt, uint256 endAt);
 
@@ -31,6 +31,7 @@ contract ScheduledRouter is BasicRouter {
 
   function findDestination(address _origin) virtual override public view returns (address) {
     Schedule memory schedule_ = schedules[_origin];
+    // solhint-disable-next-line not-rely-on-time
     if (now < schedule_.startAt || now > schedule_.endAt) {
       return address(0);
     }
@@ -38,7 +39,9 @@ contract ScheduledRouter is BasicRouter {
   }
 
   function setRouteSchedule(address _origin, uint256 _startAt, uint256 _endAt)
-    public onlyOwner configNotLocked returns (bool) {
+    public onlyOwner configNotLocked returns (bool)
+  {
+    // solhint-disable-next-line not-rely-on-time
     require(_startAt > now && _startAt < _endAt, "SR01");
     schedules[_origin] = Schedule(_startAt, _endAt);
     emit Scheduled(_startAt, _endAt);

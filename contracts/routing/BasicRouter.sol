@@ -1,4 +1,4 @@
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity ^0.6.0;
 
 
 import "../governance/Ownable.sol";
@@ -27,17 +27,20 @@ contract BasicRouter is IRouter, Ownable {
     bytes4 destinationAbi;
   }
 
-  mapping(address => Route) routes;
-  bool private configLocked_;
+  mapping(address => Route) public routes;
+  bool public configLocked_;
 
   modifier configNotLocked() {
     require(!configLocked_, "RO01");
     _;
   }
 
+  receive() override external payable {
+    _callPayable(msg.value, msg.sender, msg.data);
+  }
+
   fallback() override external payable {
-    require(configLocked_, "RO02");
-    callPayable(msg.value, msg.sender, msg.data);
+    _callPayable(msg.value, msg.sender, msg.data);
   }
 
   function destinations(address _origin) override public view returns (address[] memory) {
@@ -62,7 +65,7 @@ contract BasicRouter is IRouter, Ownable {
   function findDestination(address _origin) virtual public view returns (address) {
     Route memory route = routes[_origin];
     return (route.destinations.length > 0) ?
-      route.destinations[route.activeDestination]: address(0);
+      route.destinations[route.activeDestination] : address(0);
   }
 
   function setRoute(
@@ -97,8 +100,10 @@ contract BasicRouter is IRouter, Ownable {
    * @dev Send the received ETH to the configured and locked contract address
    * The call can be done only when the redirection has started
    */
-  function callPayable(uint256 _value, address _sender, bytes memory _data) virtual internal
+  // solhint-disable-next-line no-unused-vars
+  function _callPayable(uint256 _value, address _sender, bytes memory _data) virtual internal
   {
+    require(configLocked_, "RO02");
     address destination = findDestination(_sender);
     require(destination != address(0), "RO04");
 
@@ -106,11 +111,13 @@ contract BasicRouter is IRouter, Ownable {
 
     bool success;
     bytes memory result;
-    if(destinationAbi_ != bytes4(0)) {
+    if (destinationAbi_ != bytes4(0)) {
       bytes memory encodedData =  abi.encode(destinationAbi_, _sender, _data);
-      (success, result) = destination.call.value(_value)(encodedData);
+      // solhint-disable-next-line avoid-call-value, avoid-low-level-calls
+      (success, result) = destination.call{value: _value}(encodedData);
     } else {
-      (success, result) = destination.call.value(_value)(_data);
+      // solhint-disable-next-line avoid-call-value, avoid-low-level-calls
+      (success, result) = destination.call{value:_value}(_data);
     }
 
     require(success, "RO05");

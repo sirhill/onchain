@@ -5,7 +5,7 @@
  */
 
 const assertRevert = require('../helpers/assertRevert');
-var OperatorMock = artifacts.require('../../contracts/mock/OperatorMock.sol');
+const OperatorMock = artifacts.require('../../contracts/mock/OperatorMock.sol');
 
 const OPERATOR = web3.utils.toHex('OPERATOR').padEnd(66, '0');
 const OPERATOR1 = web3.utils.toHex('OPERATOR1').padEnd(66, '0');

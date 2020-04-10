@@ -1,5 +1,3 @@
 node_modules/*
-bak
-openzeppelin-solidity
 coverage
 truffle-config.js

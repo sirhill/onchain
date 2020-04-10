@@ -158,8 +158,9 @@
 113
 114
 115
-116</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+116
+117
+118</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,6 +223,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,6 +245,8 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -273,7 +277,7 @@
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.5.0 &lt;0.6.0;
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.6.0 &lt;0.7.0;
 &nbsp;
 &nbsp;
 import "../interface/IERC20.sol";
@@ -294,7 +298,6 @@ contract ERC20Token is IERC20 {
   uint256 private totalSupply_;
 &nbsp;
   mapping(address =&gt; uint256) private balances;
-&nbsp;
   mapping (address =&gt; mapping (address =&gt; uint256)) internal allowed;
 &nbsp;
   constructor(
@@ -310,33 +313,34 @@ contract ERC20Token is IERC20 {
     balances[msg.sender] = _totalSupply;
   }
 &nbsp;
-  function name() public view returns (string memory) {
+  function name() override public view returns (string memory) {
     return name_;
   }
 &nbsp;
-  function symbol() public view returns (string memory) {
+  function symbol() override public view returns (string memory) {
     return symbol_;
   }
 &nbsp;
-  function decimal() public view returns (uint256) {
+  function decimal() override public view returns (uint256) {
     return decimal_;
   }
 &nbsp;
-  function totalSupply() public view returns (uint256) {
+  function totalSupply() override public view returns (uint256) {
     return totalSupply_;
   }
 &nbsp;
-  function balanceOf(address _owner) public view returns (uint256) {
+  function balanceOf(address _owner) override public view returns (uint256) {
     return balances[_owner];
   }
 &nbsp;
   function allowance(address _owner, address _spender)
-    public view returns (uint256)
+    override public view returns (uint256)
   {
     return allowed[_owner][_spender];
   }
 &nbsp;
-  function transfer(address _to, uint256 _value) public returns (bool) {
+  function transfer(address _to, uint256 _value)
+    override public returns (bool) {
     <span class="missing-if-branch" title="else path not taken" >E</span>require(_to != address(0));
     <span class="missing-if-branch" title="else path not taken" >E</span>require(_value &lt;= balances[msg.sender]);
 &nbsp;
@@ -347,7 +351,7 @@ contract ERC20Token is IERC20 {
   }
 &nbsp;
   function transferFrom(address _from, address _to, uint256 _value)
-    public returns (bool)
+    override public returns (bool)
   {
     <span class="missing-if-branch" title="else path not taken" >E</span>require(_to != address(0));
     <span class="missing-if-branch" title="else path not taken" >E</span>require(_value &lt;= balances[_from]);
@@ -360,14 +364,16 @@ contract ERC20Token is IERC20 {
     return true;
   }
 &nbsp;
-  function approve(address _spender, uint256 _value) public returns (bool) {
+  function approve(address _spender, uint256 _value)
+    override public returns (bool)
+  {
     allowed[msg.sender][_spender] = _value;
     emit Approval(msg.sender, _spender, _value);
     return true;
   }
 &nbsp;
   function increaseApproval(address _spender, uint _addedValue)
-    public returns (bool)
+    override public returns (bool)
   {
     allowed[msg.sender][_spender] = (
       allowed[msg.sender][_spender].add(_addedValue));
@@ -376,7 +382,7 @@ contract ERC20Token is IERC20 {
   }
 &nbsp;
   function decreaseApproval(address _spender, uint _subtractedValue)
-    public returns (bool)
+    override public returns (bool)
   {
     uint oldValue = allowed[msg.sender][_spender];
     <span class="missing-if-branch" title="if path not taken" >I</span>if (_subtractedValue &gt; oldValue) {
@@ -394,7 +400,7 @@ contract ERC20Token is IERC20 {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Sep 28 2019 10:11:02 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 10 2020 16:46:38 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

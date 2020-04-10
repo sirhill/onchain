@@ -1,4 +1,4 @@
-pragma solidity >=0.6.0 <0.7.0;
+pragma solidity >=0.6.0;
 
 
 /**
@@ -20,6 +20,7 @@ abstract contract IRouter {
   event RouteDefined(address origin, address[] destinations, bytes4 destinationAbi);
   event DestinationSwitched(address origin, uint256 activeDestination);
 
+  receive() virtual external payable;
   fallback() virtual external payable;
   function destinations(address _origin) virtual public view returns (address[] memory);
   function destinationAbi(address _origin) virtual public view returns (bytes4);

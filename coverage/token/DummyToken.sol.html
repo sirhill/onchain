@@ -222,9 +222,7 @@
 177
 178
 179
-180
-181</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+180</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -403,7 +401,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.5.0 &lt;0.6.0;
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;=0.6.0 &lt;0.7.0;
 &nbsp;
 &nbsp;
 import "../interface/IERC20.sol";
@@ -429,7 +427,6 @@ contract DummyToken is IERC20 {
   IERC20 twin_;
 &nbsp;
   mapping(address =&gt; uint256) private balances;
-&nbsp;
   mapping (address =&gt; mapping (address =&gt; uint256)) internal allowed;
 &nbsp;
 <span class="fstat-no" title="function not covered" >  constructor(</span>
@@ -448,23 +445,23 @@ contract DummyToken is IERC20 {
 <span class="cstat-no" title="statement not covered" >    rateAt_ = now</span>;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function name() public view returns (string memory) </span>{
+<span class="fstat-no" title="function not covered" >  function name() override public view returns (string memory) </span>{
 <span class="cstat-no" title="statement not covered" >    return name_;</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function symbol() public view returns (string memory) </span>{
+<span class="fstat-no" title="function not covered" >  function symbol() override public view returns (string memory) </span>{
 <span class="cstat-no" title="statement not covered" >    return symbol_;</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function decimal() public view returns (uint256) </span>{
+<span class="fstat-no" title="function not covered" >  function decimal() override public view returns (uint256) </span>{
 <span class="cstat-no" title="statement not covered" >    return decimal_;</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function totalSupply() public view returns (uint256) </span>{
+<span class="fstat-no" title="function not covered" >  function totalSupply() override public view returns (uint256) </span>{
 <span class="cstat-no" title="statement not covered" >    return totalSupply_.mul(interest()).div(100);</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function balanceOf(address _owner) public view returns (uint256) </span>{
+<span class="fstat-no" title="function not covered" >  function balanceOf(address _owner) override public view returns (uint256) </span>{
 <span class="cstat-no" title="statement not covered" >    return balances[_owner].mul(interest()).div(100);</span>
   }
 &nbsp;
@@ -485,12 +482,12 @@ contract DummyToken is IERC20 {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function allowance(address _owner, address _spender)</span>
-    public view returns (uint256)
+    override public view returns (uint256)
   {
 <span class="cstat-no" title="statement not covered" >    return allowed[_owner][_spender];</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function transfer(address _to, uint256 _value) public returns (bool) </span>{
+<span class="fstat-no" title="function not covered" >  function transfer(address _to, uint256 _value) override public returns (bool) </span>{
 <span class="cstat-no" title="statement not covered" >    require(_to != address(0))</span>;
 <span class="cstat-no" title="statement not covered" >    require(_value &lt;= balances[msg.sender])</span>;
 &nbsp;
@@ -501,7 +498,7 @@ contract DummyToken is IERC20 {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function transferFrom(address _from, address _to, uint256 _value)</span>
-    public returns (bool)
+    override public returns (bool)
   {
 <span class="cstat-no" title="statement not covered" >    require(_to != address(0))</span>;
 <span class="cstat-no" title="statement not covered" >    require(_value &lt;= balances[_from])</span>;
@@ -514,14 +511,14 @@ contract DummyToken is IERC20 {
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function approve(address _spender, uint256 _value) public returns (bool) </span>{
+<span class="fstat-no" title="function not covered" >  function approve(address _spender, uint256 _value) override public returns (bool) </span>{
 <span class="cstat-no" title="statement not covered" >    allowed[msg.sender][_spender] = _value</span>;
 <span class="cstat-no" title="statement not covered" >    emit Approval(msg.sender, _spender, _value);</span>
 <span class="cstat-no" title="statement not covered" >    return true;</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function increaseApproval(address _spender, uint _addedValue)</span>
-    public returns (bool)
+    override public returns (bool)
   {
 <span class="cstat-no" title="statement not covered" >    allowed[msg.sender][_spender] = (</span>
       allowed[msg.sender][_spender].add(_addedValue));
@@ -530,7 +527,7 @@ contract DummyToken is IERC20 {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  function decreaseApproval(address _spender, uint _subtractedValue)</span>
-    public returns (bool)
+    override public returns (bool)
   {
 <span class="cstat-no" title="statement not covered" >    uint oldValue = allowed[msg.sender][_spender];</span>
 <span class="cstat-no" title="statement not covered" >    if (_subtractedValue &gt; oldValue) {</span>
@@ -589,7 +586,7 @@ contract DummyToken is IERC20 {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Sep 28 2019 10:11:02 GMT+0000 (Coordinated Universal Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Apr 10 2020 16:46:38 GMT+0000 (Coordinated Universal Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

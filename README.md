@@ -1,5 +1,9 @@
 # OnChain Contracts
 
+[![NPM Package](https://img.shields.io/npm/v/@sirhill/onchain.svg)](https://www.npmjs.org/package/@sirhill/onchain)
+[![Build Status](https://circleci.com/gh/sirhill/onchains.svg?style=shield)](https://circleci.com/gh/sirhill/onchain)
+[![Coverage Status](https://codecov.io/gh/sirhill/onchain/graph/badge.svg)](https://codecov.io/gh/sirhill/onchain)
+
 Utility smart contracts for onchain operations
 
 Written by **Cyril Lapinte**, <cyril.lapinte@gmail.com>.

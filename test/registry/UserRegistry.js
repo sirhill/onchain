@@ -47,7 +47,7 @@ contract('UserRegistry', function (accounts) {
 
       const userCount = await userRegistry.userCount();
       assert.equal(userCount.toNumber(), 1, 'userCount');
-      
+
       const userId = await userRegistry.userId(accounts[0]);
       assert.equal(userId.toNumber(), 1, 'userId');
 
@@ -66,7 +66,7 @@ contract('UserRegistry', function (accounts) {
 
       const userCount = await userRegistry.userCount();
       assert.equal(userCount.toNumber(), 2, 'userCount');
-      
+
       const userId1 = await userRegistry.userId(accounts[0]);
       assert.equal(userId1.toNumber(), 1, 'userId0');
       const validUserId1 = await userRegistry.validUserId(accounts[0]);
@@ -300,7 +300,7 @@ contract('UserRegistry', function (accounts) {
       assert.equal(validUntilTime1, dayPlusTwoTime, 'validUntilTime');
       const suspended1 = await userRegistry.suspended(1);
       assert.equal(suspended1, true, 'suspended');
-     
+
       const validUntilTime2 = await userRegistry.validUntilTime(2);
       assert.equal(validUntilTime2, dayPlusTwoTime, 'validUntilTime2');
       const suspended2 = await userRegistry.suspended(2);
@@ -323,7 +323,7 @@ contract('UserRegistry', function (accounts) {
       assert.equal(extended2, 100, 'extended2');
     });
   });
- 
+
   describe('with 4 accounts and with 2 accounts suspended', function () {
     beforeEach(async function () {
       userRegistry = await UserRegistry.new([accounts[0], accounts[1], accounts[2], accounts[3]], dayPlusOneTime);
