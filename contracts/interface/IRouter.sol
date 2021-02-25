@@ -1,4 +1,4 @@
-pragma solidity >=0.6.0;
+pragma solidity >=0.8.0;
 
 
 /**
@@ -12,6 +12,7 @@ pragma solidity >=0.6.0;
  * RO03: no valid routes were found
  * RO04: redirection has failed
  *
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 abstract contract IRouter {
@@ -32,5 +33,5 @@ abstract contract IRouter {
     bytes4 _destinationAbi
     ) virtual public returns (bool);
 
-  function lockConfig() virtual public;
+  function lockConfig() virtual public returns (bool);
 }

@@ -1,9 +1,11 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 /**
  * @title IUserRegistry
  * @dev IUserRegistry interface
+
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  **/
 abstract contract IUserRegistry {

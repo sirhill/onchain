@@ -3,7 +3,7 @@ version: 2.1
 aliases:
   - &defaults
     docker:
-      - image: circleci/node:10
+      - image: cimg/node:15.10.0
 
   - &cache_key_node_modules
     key: v1-node_modules-{{ checksum "package-lock.json" }}

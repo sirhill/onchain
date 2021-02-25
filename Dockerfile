@@ -1,7 +1,7 @@
 FROM ethereum/solc:stable as build
 
 FROM alpine
-LABEL name=sirhill/truffle
+LABEL name=sirhill/hardhat
 
 COPY --from=build /usr/bin/solc /usr/bin/solc
 
@@ -12,8 +12,7 @@ RUN mkdir /home/.yarn-global
 RUN adduser -D -s /bin/bash -h /home/node -u 1000 node
 USER node
 RUN yarn config set prefix ~/.yarn-global
-RUN yarn global add node-gyp
-RUN yarn global add npm truffle ganache-cli
+RUN yarn global add npm
 RUN echo "export PATH=$PATH:~/.yarn-global/bin" > ~/.bashrc
 
 RUN mkdir /home/node/project

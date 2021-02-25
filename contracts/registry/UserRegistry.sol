@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "../governance/Operator.sol";
 import "../interface/IUserRegistry.sol";
@@ -10,6 +10,7 @@ import "../interface/IUserRegistry.sol";
  * Configure and manage users_
  * Extended may be used externaly to store data within a user context
  *
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  *
  * Error messages
@@ -36,7 +37,7 @@ contract UserRegistry is IUserRegistry, Operator {
   /**
    * @dev contructor
    **/
-  constructor(address[] memory _addresses, uint256 _validUntilTime) public {
+  constructor(address[] memory _addresses, uint256 _validUntilTime) {
     for (uint256 i = 0; i < _addresses.length; i++) {
       _registerUserInternal(_addresses[i], _validUntilTime);
     }
@@ -281,7 +282,8 @@ contract UserRegistry is IUserRegistry, Operator {
     internal
   {
     require(walletOwners_[_address] == 0, "UR03");
-    users_[++userCount_] = User(_validUntilTime, false);
+    User storage user = users_[++userCount_];
+    user.validUntilTime = _validUntilTime;
     walletOwners_[_address] = userCount_;
 
     emit UserRegistered(userCount_);
@@ -303,6 +305,6 @@ contract UserRegistry is IUserRegistry, Operator {
    */
   function _isValidInternal(User storage user) internal view returns (bool) {
     // solhint-disable-next-line not-rely-on-time
-    return !user.suspended && user.validUntilTime > now;
+    return !user.suspended && user.validUntilTime > block.timestamp;
   }
 }

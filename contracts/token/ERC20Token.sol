@@ -1,18 +1,17 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 import "../interface/IERC20.sol";
-import "../math/SafeMath.sol";
 
 
 /**
  * @title ERC20 token
  * @dev ERC20 token default implementation
+ *
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 contract ERC20Token is IERC20 {
-  using SafeMath for uint256;
-
   string public name_;
   string public symbol_;
   uint256 public decimal_;
@@ -25,7 +24,7 @@ contract ERC20Token is IERC20 {
     string memory _name,
     string memory _symbol,
     uint256 _decimal,
-    uint256 _totalSupply) public
+    uint256 _totalSupply)
   {
     name_ = _name;
     symbol_ = _symbol;
@@ -66,8 +65,8 @@ contract ERC20Token is IERC20 {
     require(_to != address(0));
     require(_value <= balances_[msg.sender]);
 
-    balances_[msg.sender] = balances_[msg.sender].sub(_value);
-    balances_[_to] = balances_[_to].add(_value);
+    balances_[msg.sender] -= _value;
+    balances_[_to] += _value;
     emit Transfer(msg.sender, _to, _value);
     return true;
   }
@@ -79,9 +78,9 @@ contract ERC20Token is IERC20 {
     require(_value <= balances_[_from]);
     require(_value <= allowed_[_from][msg.sender]);
 
-    balances_[_from] = balances_[_from].sub(_value);
-    balances_[_to] = balances_[_to].add(_value);
-    allowed_[_from][msg.sender] = allowed_[_from][msg.sender].sub(_value);
+    balances_[_from] -= _value;
+    balances_[_to] += _value;
+    allowed_[_from][msg.sender] -= _value;
     emit Transfer(_from, _to, _value);
     return true;
   }
@@ -97,8 +96,7 @@ contract ERC20Token is IERC20 {
   function increaseApproval(address _spender, uint _addedValue)
     override public returns (bool)
   {
-    allowed_[msg.sender][_spender] = (
-      allowed_[msg.sender][_spender].add(_addedValue));
+    allowed_[msg.sender][_spender] += _addedValue;
     emit Approval(msg.sender, _spender, allowed_[msg.sender][_spender]);
     return true;
   }
@@ -110,7 +108,7 @@ contract ERC20Token is IERC20 {
     if (_subtractedValue > oldValue) {
       allowed_[msg.sender][_spender] = 0;
     } else {
-      allowed_[msg.sender][_spender] = oldValue.sub(_subtractedValue);
+      allowed_[msg.sender][_spender] -= _subtractedValue;
     }
     emit Approval(msg.sender, _spender, allowed_[msg.sender][_spender]);
     return true;

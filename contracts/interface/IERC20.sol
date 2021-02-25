@@ -1,10 +1,12 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 /**
  * @title IERC20 interface
  * @dev see https://github.com/ethereum/EIPs/issues/20
  * @dev see https://github.com/ethereum/EIPs/issues/179
+ *
+ * SPDX-License-Identifier: MIT
  */
 abstract contract IERC20 {
 

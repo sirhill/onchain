@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "./Ownable.sol";
 
@@ -7,6 +7,7 @@ import "./Ownable.sol";
  * @title Operator
  * @dev The Operator contract contains list of addresses authorized to specific operations
  *
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  *
  * Error messages

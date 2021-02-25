@@ -1,4 +1,5 @@
 node_modules
-build
 .secret.json
 .DS_Store
+artifacts
+cache

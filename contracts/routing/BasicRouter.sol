@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 import "../governance/Ownable.sol";
@@ -10,6 +10,9 @@ import "../interface/IRouter.sol";
  *
  * @dev To avoid abuse the configuration need to be locked before the redirection is active
  *
+ * SPDX-License-Identifier: MIT
+ * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
+ *
  * Error messages
  * RO01: configuration is locked
  * RO02: configuration has not been locked
@@ -17,7 +20,6 @@ import "../interface/IRouter.sol";
  * RO04: no valid routes were found
  * RO05: redirection has failed
  *
- * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 contract BasicRouter is IRouter, Ownable {
 
@@ -36,10 +38,14 @@ contract BasicRouter is IRouter, Ownable {
   }
 
   receive() override external payable {
-    _callPayable(msg.value, msg.sender, msg.data);
+    fallbackInternal();
   }
 
   fallback() override external payable {
+    fallbackInternal();
+  }
+
+  function fallbackInternal() internal {
     _callPayable(msg.value, msg.sender, msg.data);
   }
 
@@ -86,14 +92,16 @@ contract BasicRouter is IRouter, Ownable {
     routes[_origin].activeDestination = _activeDestination;
     
     emit DestinationSwitched(_origin, _activeDestination);
+    return true;
   }
 
   /*
    * @dev Lock the configuration
    */
-  function lockConfig() override public onlyOwner configNotLocked {
+  function lockConfig() override public onlyOwner configNotLocked returns (bool) {
     configLocked_ = true;
     emit ConfigLocked();
+    return true;
   }
 
   /*

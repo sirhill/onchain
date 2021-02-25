@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "./ScheduledRouter.sol";
 
@@ -7,12 +7,13 @@ import "./ScheduledRouter.sol";
  * @title DynamicRouter
  * @dev DynamicRouter
  *
- * To avoid abuse the configuration need to be locked before the redirection is active
+ * @notice To avoid abuse the configuration need to be locked before the redirection is active
+ *
+ * SPDX-License-Identifier: MIT
+ * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  *
  * Error messages
  * DR01: maxBalances and weights length must match destinations length
- *
- * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 contract DynamicRouter is ScheduledRouter {
 

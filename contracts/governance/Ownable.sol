@@ -1,9 +1,11 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 /**
  * @title Ownable
  * @dev The Ownable contract define an owner address and methods to transfer ownership
+ *
+ * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
 contract Ownable {
@@ -20,7 +22,7 @@ contract Ownable {
    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
    * account.
    */
-  constructor() public {
+  constructor() {
     owner = msg.sender;
   }
 

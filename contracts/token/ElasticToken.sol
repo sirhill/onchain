@@ -1,18 +1,18 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 import "../interface/IERC20.sol";
-import "../math/SafeMath.sol";
 import "./ERC20Token.sol";
 
 
 /**
- * @title Dummy ERC20 token
+ * @title Elastic ERC20 token
  * @dev ERC20 token default implementation
+ *
+ * SPDX-License-Identifier: MIT
+ * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
  */
-contract DummyToken is IERC20 {
-  using SafeMath for uint256;
-
+contract ElasticToken is IERC20 {
   string public name_;
   string public symbol_;
   uint256 public decimal_;
@@ -30,7 +30,7 @@ contract DummyToken is IERC20 {
     string memory _name,
     string memory _symbol,
     uint256 _decimal,
-    uint256 _totalSupply) public
+    uint256 _totalSupply)
   {
     name_ = _name;
     symbol_ = _symbol;
@@ -40,7 +40,7 @@ contract DummyToken is IERC20 {
 
     rate_ = 1;
     // solhint-disable-next-line not-rely-on-time
-    rateAt_ = now;
+    rateAt_ = block.timestamp;
   }
 
   function name() override public view returns (string memory) {
@@ -56,11 +56,11 @@ contract DummyToken is IERC20 {
   }
 
   function totalSupply() override public view returns (uint256) {
-    return totalSupply_.mul(interest()).div(100);
+    return totalSupply_ * interest() / 100;
   }
 
   function balanceOf(address _owner) override public view returns (uint256) {
-    return balances_[_owner].mul(interest()).div(100);
+    return balances_[_owner] * interest() / 100;
   }
 
   function rate() public view returns (uint256) {
@@ -73,7 +73,7 @@ contract DummyToken is IERC20 {
 
   function interest() public view returns (uint256) {
     // solhint-disable-next-line not-rely-on-time
-    return rate_.mul(now - rateAt_).div(36);
+    return rate_ * (block.timestamp - rateAt_) / 36;
   }
 
   function twin() public view returns (IERC20) {
@@ -90,8 +90,8 @@ contract DummyToken is IERC20 {
     require(_to != address(0));
     require(_value <= balances_[msg.sender]);
 
-    balances_[msg.sender] = balances_[msg.sender].sub(_value);
-    balances_[_to] = balances_[_to].add(_value);
+    balances_[msg.sender] -= _value;
+    balances_[_to] += _value;
     emit Transfer(msg.sender, _to, _value);
     return true;
   }
@@ -103,9 +103,9 @@ contract DummyToken is IERC20 {
     require(_value <= balances_[_from]);
     require(_value <= allowed_[_from][msg.sender]);
 
-    balances_[_from] = balances_[_from].sub(_value);
-    balances_[_to] = balances_[_to].add(_value);
-    allowed_[_from][msg.sender] = allowed_[_from][msg.sender].sub(_value);
+    balances_[_from] = balances_[_from] - _value;
+    balances_[_to] = balances_[_to] + _value;
+    allowed_[_from][msg.sender] = allowed_[_from][msg.sender] - _value;
     emit Transfer(_from, _to, _value);
     return true;
   }
@@ -119,8 +119,7 @@ contract DummyToken is IERC20 {
   function increaseApproval(address _spender, uint _addedValue)
     override public returns (bool)
   {
-    allowed_[msg.sender][_spender] = (
-      allowed_[msg.sender][_spender].add(_addedValue));
+    allowed_[msg.sender][_spender] += _addedValue;
     emit Approval(msg.sender, _spender, allowed_[msg.sender][_spender]);
     return true;
   }
@@ -132,7 +131,7 @@ contract DummyToken is IERC20 {
     if (_subtractedValue > oldValue) {
       allowed_[msg.sender][_spender] = 0;
     } else {
-      allowed_[msg.sender][_spender] = oldValue.sub(_subtractedValue);
+      allowed_[msg.sender][_spender] -= _subtractedValue;
     }
     emit Approval(msg.sender, _spender, allowed_[msg.sender][_spender]);
     return true;
@@ -155,7 +154,7 @@ contract DummyToken is IERC20 {
   function updateRate(uint256 _rate) public {
     rate_ = _rate;
     // solhint-disable-next-line not-rely-on-time
-    rateAt_ = now;
+    rateAt_ = block.timestamp;
   }
 
   function updateTwin(IERC20 _twin) public {
@@ -170,8 +169,8 @@ contract DummyToken is IERC20 {
     require(_to != address(0));
     require(_value <= balances_[msg.sender]);
 
-    balances_[msg.sender] = balances_[msg.sender].sub(_value);
-    balances_[_to] = balances_[_to].add(_value);
+    balances_[msg.sender] -= _value;
+    balances_[_to] += _value;
     return true;
   }
 
