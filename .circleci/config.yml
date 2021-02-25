@@ -19,7 +19,7 @@ jobs:
           name: Install npm dependencies and prepare
           command: |
             if [ ! -d node_modules ]; then
-              npm ci
+              yarn install --frozen-lockfile
             fi
       - persist_to_workspace:
           root: .
