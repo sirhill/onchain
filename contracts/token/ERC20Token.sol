@@ -10,6 +10,11 @@ import "../interface/IERC20.sol";
  *
  * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
+ *
+ * Error messages
+ * TO01: recipient must not be null
+ * TO02: sender can only send his tokens
+ * TO03: the allowance is too low
  */
 contract ERC20Token is IERC20 {
   string public name_;
@@ -62,8 +67,8 @@ contract ERC20Token is IERC20 {
   function transfer(address _to, uint256 _value)
     override public returns (bool)
   {
-    require(_to != address(0));
-    require(_value <= balances_[msg.sender]);
+    require(_to != address(0), "TO01");
+    require(_value <= balances_[msg.sender], "TO02");
 
     balances_[msg.sender] -= _value;
     balances_[_to] += _value;
@@ -74,9 +79,9 @@ contract ERC20Token is IERC20 {
   function transferFrom(address _from, address _to, uint256 _value)
     override public returns (bool)
   {
-    require(_to != address(0));
-    require(_value <= balances_[_from]);
-    require(_value <= allowed_[_from][msg.sender]);
+    require(_to != address(0), "TO01");
+    require(_value <= balances_[_from], "TO02");
+    require(_value <= allowed_[_from][msg.sender], "TO03");
 
     balances_[_from] -= _value;
     balances_[_to] += _value;

@@ -38,14 +38,14 @@ contract BasicRouter is IRouter, Ownable {
   }
 
   receive() override external payable {
-    fallbackInternal();
+    _fallback();
   }
 
   fallback() override external payable {
-    fallbackInternal();
+    _fallback();
   }
 
-  function fallbackInternal() internal {
+  function _fallback() internal {
     _callPayable(msg.value, msg.sender, msg.data);
   }
 

@@ -7,19 +7,19 @@ require('solidity-coverage');
 require('hardhat-gas-reporter');
 
 let secret = {
-  mnemonic: "test test test test test test test test test test test junk",
-  infuraKey: "",
+  mnemonic: 'test test test test test test test test test test test junk',
+  infuraKey: '',
 };
 
 try {
   // Secret file format is:
   // { mnemonic: '', infuraKey, '', endpoints: { <networkname>: 'http://endpoint' } }
-  const path = __dirname + "/" + ".secret.json";
-  if (fs.existsSync(path)) {
-    secret = JSON.parse(fs.readFileSync(path));
+  const secretFile = path.join(__dirname, '.secret.json');
+  if (fs.existsSync(secretFile)) {
+    secret = JSON.parse(fs.readFileSync(secretFile));
   }
-} catch(err) {
-  console.warn('No secret configuration found!');
+} catch (warning) {
+  console.warn('No secret configuration found!', warning);
 }
 
 const enableGasReport = !!process.env.ENABLE_GAS_REPORT;
@@ -44,7 +44,7 @@ module.exports = {
       gas: 'auto',
       accounts: {
         mnemonic: secret.mnemonic,
-      }
+      },
     },
   },
   gasReporter: {

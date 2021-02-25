@@ -7,6 +7,10 @@ pragma solidity ^0.8.0;
  *
  * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
+ *
+ * Error messages
+ * OW01: Only the owner
+ * OW02: Owner can't be undefined
  */
 contract Ownable {
 
@@ -30,7 +34,7 @@ contract Ownable {
    * @dev Throws if called by any account other than the owner.
    */
   modifier onlyOwner() {
-    require(msg.sender == owner);
+    require(msg.sender == owner, "OW01");
     _;
   }
 
@@ -55,7 +59,7 @@ contract Ownable {
    * @param _newOwner The address to transfer ownership to.
    */
   function _transferOwnership(address _newOwner) internal {
-    require(_newOwner != address(0));
+    require(_newOwner != address(0), "OW02");
     emit OwnershipTransferred(owner, _newOwner);
     owner = _newOwner;
   }

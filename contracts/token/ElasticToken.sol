@@ -11,6 +11,12 @@ import "./ERC20Token.sol";
  *
  * SPDX-License-Identifier: MIT
  * @author Cyril Lapinte - <cyril.lapinte@gmail.com>
+ *
+ * Error messages
+ * EL01: recipient must not be null
+ * EL02: sender can only send his tokens
+ * EL03: the allowance is too low
+ * EL04: twin must be defined
  */
 contract ElasticToken is IERC20 {
   string public name_;
@@ -87,8 +93,8 @@ contract ElasticToken is IERC20 {
   }
 
   function transfer(address _to, uint256 _value) override public returns (bool) {
-    require(_to != address(0));
-    require(_value <= balances_[msg.sender]);
+    require(_to != address(0), "EL01");
+    require(_value <= balances_[msg.sender], "EL02");
 
     balances_[msg.sender] -= _value;
     balances_[_to] += _value;
@@ -99,9 +105,9 @@ contract ElasticToken is IERC20 {
   function transferFrom(address _from, address _to, uint256 _value)
     override public returns (bool)
   {
-    require(_to != address(0));
-    require(_value <= balances_[_from]);
-    require(_value <= allowed_[_from][msg.sender]);
+    require(_to != address(0), "EL01");
+    require(_value <= balances_[_from], "EL02");
+    require(_value <= allowed_[_from][msg.sender], "EL03");
 
     balances_[_from] = balances_[_from] - _value;
     balances_[_to] = balances_[_to] + _value;
@@ -166,8 +172,8 @@ contract ElasticToken is IERC20 {
   }
 
   function transferNoEvent(address _to, uint256 _value) public returns (bool) {
-    require(_to != address(0));
-    require(_value <= balances_[msg.sender]);
+    require(_to != address(0), "EL01");
+    require(_value <= balances_[msg.sender], "EL02");
 
     balances_[msg.sender] -= _value;
     balances_[_to] += _value;
@@ -175,7 +181,7 @@ contract ElasticToken is IERC20 {
   }
 
   function transferTwin(address _to, uint256 _value) public returns (bool) {
-    require(address(twin_) != address(0));
+    require(address(twin_) != address(0), "EL04");
     return twin_.transfer(_to, _value);
   }
 }
