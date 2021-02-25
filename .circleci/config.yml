@@ -6,7 +6,7 @@ aliases:
       - image: cimg/node:15.10.0
 
   - &cache_key_node_modules
-    key: v1-node_modules-{{ checksum "package-lock.json" }}
+    key: v1-node_modules-{{ checksum "yarn.lock" }}
 
 jobs:
   dependencies:
