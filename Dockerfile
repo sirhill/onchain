@@ -1,12 +1,12 @@
-FROM ethereum/solc:stable as build
+FROM ethereum/solc:0.5.13-alpine as build
 
 FROM alpine
 LABEL name=sirhill/truffle
 
-COPY --from=build /usr/bin/solc /usr/bin/solc
+COPY --from=build /usr/local/bin/solc /usr/bin/solc
 
 RUN apk add --update bash vim less sudo openssh \
-     nodejs yarn git openssl g++ tar python make curl
+     nodejs yarn git openssl g++ tar python3 make curl
 
 RUN mkdir /home/.yarn-global
 RUN adduser -D -s /bin/bash -h /home/node -u 1000 node
